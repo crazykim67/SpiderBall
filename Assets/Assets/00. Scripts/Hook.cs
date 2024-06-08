@@ -9,20 +9,17 @@ public class Hook : MonoBehaviour
     [SerializeField]
     private DistanceJoint2D distanceJoint;
 
+    [SerializeField]
     private float timer = 0f;
+
+    [SerializeField]
+    private float firstDrag = 0.1f;
+    [SerializeField]
+    private float secondDrag = 0.3f;
 
     private void Update()
     {
         PosCheck();
-    }
-
-    private void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.transform.tag == "Ring")
-        {
-            distanceJoint.enabled = true;
-            hookController.isAttach = true;
-        }
     }
 
     private void PosCheck()
@@ -31,9 +28,9 @@ public class Hook : MonoBehaviour
         {
             timer += Time.deltaTime;
             if (timer > 5 && timer < 8)
-                hookController.rg.drag = 0.05f;
+                hookController.rg.drag = 0.1f;
             else if (timer > 8)
-                hookController.rg.drag = 0.2f;
+                hookController.rg.drag = 0.3f;
         }
         else
             timer = 0;

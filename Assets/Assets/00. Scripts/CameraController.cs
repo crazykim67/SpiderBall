@@ -14,16 +14,18 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private HookController hookController;
 
+    [SerializeField]
+    private float camSpeed;
+
     private void Awake() => cam = Camera.main;
 
     private void Update()
     {
         camPos = new Vector3(playerTr.position.x, playerTr.position.y, this.transform.position.z);
         this.transform.position = camPos;
-
-        if (hookController.rg.velocity.magnitude >= 6 && hookController.rg.velocity.magnitude < 10)
-            cam.orthographicSize = hookController.rg.velocity.magnitude;
+        if (hookController.rg.velocity.magnitude >= 6)
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, hookController.rg.velocity.magnitude, camSpeed);
         else
-            cam.orthographicSize = 6;
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 6, camSpeed);
     }
 }
