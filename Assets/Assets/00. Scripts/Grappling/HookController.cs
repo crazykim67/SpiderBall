@@ -129,17 +129,8 @@ public class HookController : MonoBehaviour
         }
         // 고리가 벽에 연결되어있는 상태
         else if (isAttach)
-        {
             if (Input.GetMouseButtonDown(0) && !IsPointerOverUIObject())
-            {
-                isAttach = false;
-                isHook = false;
-                isLengthMax = false;
-                distanceJoint.enabled = false;
-                hookTr.gameObject.SetActive(false);
-                isBoost = false;
-            }
-        }
+                UnGrappling();
 
         if(isHook && !isAttach && Vector2.Distance(hookTr.position, targetPos) < 0.1f)
         {
@@ -151,6 +142,17 @@ public class HookController : MonoBehaviour
         HookDirectionCheck();
         BoostCheck();
     }
+
+    public void UnGrappling()
+    {
+        isAttach = false;
+        isHook = false;
+        isLengthMax = false;
+        distanceJoint.enabled = false;
+        hookTr.gameObject.SetActive(false);
+        isBoost = false;
+    }
+
 
     public void HookDirectionCheck()
     {

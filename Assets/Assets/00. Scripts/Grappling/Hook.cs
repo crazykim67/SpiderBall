@@ -28,9 +28,9 @@ public class Hook : MonoBehaviour
         {
             timer += Time.deltaTime;
             if (timer > 5 && timer < 8)
-                hookController.rg.drag = 0.1f;
+                hookController.rg.drag = firstDrag;
             else if (timer > 8)
-                hookController.rg.drag = 0.3f;
+                hookController.rg.drag = secondDrag;
         }
         else
             timer = 0;
