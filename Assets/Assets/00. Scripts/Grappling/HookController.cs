@@ -28,16 +28,12 @@ public class HookController : MonoBehaviour
     [SerializeField]
     private float rayDis = 0.2f;
 
-    private Vector2 prevVelocity;
-    [SerializeField]
-    private bool isLeft = false;
     [SerializeField]
     private Button boostBtn;
     private bool isBoost = false;
 
     private void Start()
     {
-        prevVelocity = rg.velocity;
         hookTr.position = transform.position;
         line.positionCount = 2;
         line.SetPosition(0, transform.position);
@@ -80,6 +76,7 @@ public class HookController : MonoBehaviour
                 {
                     isFirst = true;
                     rg.bodyType = RigidbodyType2D.Dynamic;
+                    rg.AddTorque(10f);
                 }
             }
         }
@@ -138,8 +135,6 @@ public class HookController : MonoBehaviour
             distanceJoint.enabled = true;
             isBoost = true;
         }
-
-        HookDirectionCheck();
         BoostCheck();
     }
 
@@ -151,29 +146,6 @@ public class HookController : MonoBehaviour
         distanceJoint.enabled = false;
         hookTr.gameObject.SetActive(false);
         isBoost = false;
-    }
-
-
-    public void HookDirectionCheck()
-    {
-        if (!isHook || !isAttach)
-            return;
-
-        // 가속도 (velocity / 시간)
-        Vector2 acceleration = (rg.velocity - prevVelocity) / Time.deltaTime;
-
-        // 힘의 방향 (질량 * 가속도)
-        Vector2 forceDirection = rg.mass * acceleration;
-
-        // 힘의 방향을 정규화하여 단위 벡터로 변환
-        Vector2 normalizedForceDir = forceDirection.normalized;
-
-        if(normalizedForceDir.x < 0)
-            isLeft = true;
-        else if(normalizedForceDir.x > 0)
-            isLeft = false;
-
-        prevVelocity = rg.velocity;
     }
 
     private void BoostCheck()
@@ -190,10 +162,7 @@ public class HookController : MonoBehaviour
             return;
 
         isBoost = false;
-
-        if (isLeft)
-            rg.AddForce(new Vector2(-500, 0));
-        else
-            rg.AddForce(new Vector2(500, 0));
+        Vector2 velocity = rg.velocity; 
+        rg.AddForce(velocity * 100f, ForceMode2D.Force);
     }
 }

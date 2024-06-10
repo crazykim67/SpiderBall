@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        camPos = new Vector3(playerTr.position.x, playerTr.position.y, this.transform.position.z);
+        camPos = new Vector3(Mathf.Lerp(camPos.x, playerTr.position.x, camSpeed), Mathf.Lerp(camPos.y, playerTr.position.y, camSpeed), this.transform.position.z);
         this.transform.position = camPos;
         if (hookController.rg.velocity.magnitude >= 6)
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, hookController.rg.velocity.magnitude, camSpeed);

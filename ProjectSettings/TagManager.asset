@@ -7,6 +7,8 @@ TagManager:
   - Ring
   - NoRing
   - Monster
+  - Booster
+  - ArrowBooster
   layers:
   - Default
   - TransparentFX
