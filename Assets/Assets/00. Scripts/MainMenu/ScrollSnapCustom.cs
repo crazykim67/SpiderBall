@@ -16,6 +16,9 @@ public class ScrollSnapCustom : MonoBehaviour
 
     private void Update()
     {
+        if (buttons.Count <= 0)
+            return;
+
         foreach(var btn in buttons)
         {
             if(EventSystem.current.currentSelectedGameObject == btn.gameObject)
