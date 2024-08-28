@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class HookController : MonoBehaviour
 {
+    public int hookCount = 8;
+
     public Rigidbody2D rg;
     [SerializeField]
     private DistanceJoint2D distanceJoint;
@@ -29,8 +31,15 @@ public class HookController : MonoBehaviour
     private float rayDis = 0.2f;
 
     [SerializeField]
+    private float boostValue = 30f;
+    [SerializeField]
     private Button boostBtn;
     private bool isBoost = false;
+
+    [SerializeField]
+    private GameObject[] rings;
+
+    public HookCount hook;
 
     private void Start()
     {
@@ -39,6 +48,8 @@ public class HookController : MonoBehaviour
         line.SetPosition(0, transform.position);
         line.SetPosition(1, hookTr.position);
         line.useWorldSpace = true;
+
+        FindClosetRing();
     }
 
     // UI 터치 시 Raycast 방지 함수
@@ -51,12 +62,54 @@ public class HookController : MonoBehaviour
         return results.Count > 0;
     }
 
+    private void FindClosetRing()
+    {
+        if (rings.Length <= 0)
+            return;
+
+        GameObject closetRing = null;
+
+        float minDistance = Mathf.Infinity;
+
+        foreach(var ring in rings)
+        {
+            float distance = Vector2.Distance(transform.position, ring.transform.position);
+
+            if(distance < minDistance)
+            {
+                minDistance = distance;
+                closetRing = ring;
+            }
+        }
+
+        if(closetRing != null)
+        {
+            targetPos = closetRing.transform.position;
+            mouseDir = targetPos - (Vector2)transform.position;
+            hookTr.position = targetPos;
+
+            //갈고리 설정
+            isHook = true;
+            isAttach = true;
+            distanceJoint.enabled = true;
+            isBoost = true;
+
+            hookTr.gameObject.SetActive(true);
+
+            if (!isFirst)
+            {
+                isFirst = true;
+                rg.bodyType = RigidbodyType2D.Dynamic;
+                rg.AddTorque(10f);
+            }
+        }
+    }
+
     private void Update()
     {
         line.SetPosition(0, transform.position);
         line.SetPosition(1, hookTr.position);
-
-        if (Input.GetMouseButtonDown(0) && !isHook && !IsPointerOverUIObject())
+        if (Input.GetMouseButtonDown(0) && !isHook && !IsPointerOverUIObject() && hook.GetCount())
         {
             // 고리가 플레이어에게서 발사되기 때문에 hookTr을 플레이어 위치로 초기화
             hookTr.position = transform.position;
@@ -64,11 +117,11 @@ public class HookController : MonoBehaviour
             line.SetPosition(1, hookTr.position);
             targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseDir = targetPos - (Vector2)transform.position;
-
             RaycastHit2D hit = Physics2D.Raycast(targetPos, Vector2.zero);
 
             if(hit.collider != null && hit.collider.CompareTag("Ring"))
             {
+                hook.SubCount();
                 isHook = true;
                 hookTr.gameObject.SetActive(true);
 
@@ -135,6 +188,7 @@ public class HookController : MonoBehaviour
             distanceJoint.enabled = true;
             isBoost = true;
         }
+
         BoostCheck();
     }
 
@@ -163,6 +217,7 @@ public class HookController : MonoBehaviour
 
         isBoost = false;
         Vector2 velocity = rg.velocity; 
-        rg.AddForce(velocity * 100f, ForceMode2D.Force);
+
+        rg.AddForce(velocity * boostValue, ForceMode2D.Force);
     }
 }

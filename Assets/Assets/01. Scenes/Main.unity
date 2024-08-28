@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 206193298}
   - component: {fileID: 206193297}
   m_Layer: 5
-  m_Name: StartBtn
+  m_Name: RecordBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAC8C\uC784\uC2DC\uC791"
+  m_text: "\uAE30\uB85D\uBAA8\uB4DC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 94cf885602eba314db5ce6c8072fc8b9, type: 2}
   m_sharedMaterial: {fileID: 653273385670944830, guid: 94cf885602eba314db5ce6c8072fc8b9, type: 2}
@@ -3110,7 +3110,7 @@ GameObject:
   - component: {fileID: 1795965100}
   - component: {fileID: 1795965099}
   m_Layer: 5
-  m_Name: InfinitBtn
+  m_Name: BossBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3313,7 +3313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBB34\uD55C\uBAA8\uB4DC"
+  m_text: "\uBCF4\uC2A4\uBAA8\uB4DC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 94cf885602eba314db5ce6c8072fc8b9, type: 2}
   m_sharedMaterial: {fileID: 653273385670944830, guid: 94cf885602eba314db5ce6c8072fc8b9, type: 2}

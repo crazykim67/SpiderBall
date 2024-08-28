@@ -10,6 +10,7 @@ TagManager:
   - Booster
   - ArrowBooster
   - Item
+  - DestroyNoRing
   layers:
   - Default
   - TransparentFX

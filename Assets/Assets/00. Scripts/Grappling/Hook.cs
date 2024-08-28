@@ -6,8 +6,6 @@ public class Hook : MonoBehaviour
 {
     [SerializeField]
     private HookController hookController;
-    [SerializeField]
-    private DistanceJoint2D distanceJoint;
 
     [SerializeField]
     private float timer = 0f;
